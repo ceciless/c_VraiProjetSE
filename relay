@@ -1,0 +1,59 @@
+int * histogramme (image_desc * img, char * fName, int colorplan){
+	int *histo = malloc(256*sizeof(int));
+	int i,j,k;
+	int c;
+	int somme=0;
+	targa_header * i_head= malloc(sizeof(targa_header));
+	printf("%s -----\n", fName);
+
+	c = readImage(img, i_head,fName);
+  printf("je fais l'histogramme\n");
+	printf("width : %u, height : %u\n",img->width,img->height);
+
+  if (colorplan == 1){
+		for (i=0; i<256; i++) {
+		  histo[i] = 0;
+		}
+	  for (j=0; j<img->width;j++){
+			for(k=0; k<img->height;k++) {
+      	histo[img->pBlue[j+k*img->width]]++;
+			}
+    }
+		for (i=0; i<256; i++){
+			somme=somme+histo[i];
+		}
+		printf("La somme est %d\n", somme);
+  }    
+  if (colorplan == 2){
+    for (i=0; i<256; i++) {
+      histo[i] = 0;
+		}
+      for (j=0; j<img->width;j++){
+				for(k=0;k<img->height;k++) {
+	      	histo[img->pGreen[j+k*img->width]]++;
+				}
+	    }
+		for (i=0; i<256; i++){
+			somme=somme+histo[i];
+		}
+ 		printf("La somme est %d\n", somme);
+  }
+  if (colorplan == 4){
+    for (i=0; i<256; i++) {
+      histo[i] = 0;
+		}
+      for (j=0; j<img->width;j++){
+				for(k=0;k<img->height;k++) {
+	      	histo[img->pRed[j+k*img->width]]++;
+				}
+	    }
+    for (i=0; i<256; i++){
+			somme=somme+histo[i];
+		}
+ 		printf("La somme est %d\n", somme);
+  }
+return histo;
+}
+
+
+
